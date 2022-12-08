@@ -1,7 +1,8 @@
 #!/bin/bash
+
 PYTHON_WASI_ROOT=/Python-3.11.0-wasm32-wasi-16
 wasmtime run --dir  ${PYTHON_WASI_ROOT} \
              --mapdir /::${PYTHON_WASI_ROOT} \
              --dir /workspaces/dev-wasm-python/ \
              --mapdir /workspace::/workspaces/dev-wasm-python \
-             -- ${PYTHON_WASI_ROOT}/python.wasm /workspace/main.py
+             -- ${PYTHON_WASI_ROOT}/python.wasm "${@}"
