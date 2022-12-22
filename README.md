@@ -31,7 +31,6 @@ Visual studio should prompt you to see if you want to relaunch the workspace in 
 ./python3-wasm main.py
 ```
 
-## Web server
 ## Web serving with WAGI
 
 There is a simple example of web serving via WebAssembly + CGI (WAGI) in
