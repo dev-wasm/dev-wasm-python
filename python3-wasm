@@ -5,4 +5,4 @@ wasmtime run --dir  ${PYTHON_WASI_ROOT} \
              --mapdir /::${PYTHON_WASI_ROOT} \
              --dir /workspaces/dev-wasm-python/ \
              --mapdir /workspace::/workspaces/dev-wasm-python \
-             -- ${PYTHON_WASI_ROOT}/python.wasm "${@}"
+             -- ${PYTHON_WASI_ROOT}/python.wasm "/workspace/${@#}"

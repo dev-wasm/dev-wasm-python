@@ -1,5 +1,9 @@
 # Devcontainer WASM-Python
-Simple devcontainer for Python development
+Simple devcontainer for Python development.
+
+Note that Python + WASM is a little different for now, since the interperter (`python.wasm`) runs a standard `.py` python script.
+There is no really great way to package up a script and `python.wasm` into a single bundle for now, so that is sadly an exercise
+for the reader.
 
 # Usage
 
@@ -22,11 +26,26 @@ Visual studio should prompt you to see if you want to relaunch the workspace in 
 
 # Running
 
+## Simple example
 ```sh
-# The workspace is mapped into the wasm environment in the
-# /workspace directory
-./python3-wasm /workspace/main.py
+./python3-wasm main.py
 ```
+
+## Web server
+## Web serving with WAGI
+
+There is a simple example of web serving via WebAssembly + CGI (WAGI) in
+the `webserver` directory. It uses the lighttpd web server and `mod_cgi`.
+See the `webserver/lighttpd.conf` file for more details.
+
+```sh
+lighttpd -D -f webserver/lighttpd.conf
+```
+
+Once the server is running, VS Code or Codespaces should prompt you to connect to the open port.
+
+It is important to note that the current configuration allows filesystem access to a variety of filepaths for both read and write.
+This should be considered for test use only, we need to lock down to read-only access for production.
 
 # TODO
 * Figure out how to get PIP working

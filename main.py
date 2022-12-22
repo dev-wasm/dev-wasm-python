@@ -1,3 +1,5 @@
+import platform
+
 class PythonWasm:
     def __init__(self):
         self.message = "Hello Python WASM!"
@@ -19,6 +21,8 @@ class PythonWasm:
         
         f1.close()
         f2.close()
+
+print(platform.platform())
 
 wasm = PythonWasm()
 wasm.print()

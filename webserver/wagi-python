@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# TODO: combine this with wagi.sh
+PYTHON_WASI_ROOT=/Python-3.11.0-wasm32-wasi-16
+/root/.wasmtime/bin/wasmtime run \
+    --dir ${PYTHON_WASI_ROOT} \
+    --mapdir /::${PYTHON_WASI_ROOT} \
+    --dir /workspaces/dev-wasm-python/ \
+    --mapdir /workspace::/workspaces/dev-wasm-python \
+    --env QUERY_STRING="${QUERY_STRING}" \
+    --env CONTENT_LENGTH="${CONTENT_LENGTH}" \
+    --env PATH="${PATH}" \
+    --env HTTP_USER_AGENT="${HTTP_USER_AGENT}" \
+    --env REMOTE_ADDR="${REMOTE_ADDR}" \
+    --env REMOTE_PORT="${REMOTE_PORT}" \
+    --env REQUEST_METHOD="${REQUEST_METHOD}" \
+    --env REQUEST_SCHEME="${REQUEST_SCHEME}" \
+    --env REQUEST_URI="${REQUEST_URI}" \
+    -- ${PYTHON_WASI_ROOT}/python.wasm /workspace/"${1#/workspaces/dev-wasm-python/}"
