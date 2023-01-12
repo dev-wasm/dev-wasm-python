@@ -1,8 +1,21 @@
 #!/bin/bash
 
+if [ $# -eq 0 ]; then
+    FILE=""
+elif [[ "$1" = /* ]]; then
+    REAL_PATH=$(realpath $1)
+    HOST_DIR=$(dirname $REAL_PATH)
+    GUEST_DIR=$HOST_DIR
+    FILE=${REAL_PATH}
+else
+    HOST_DIR="/workspaces/dev-wasm-python/"
+    GUEST_DIR="/workspace"
+    FILE="/workspace/${@#}"
+fi
+
 PYTHON_WASI_ROOT=/Python-3.11.0-wasm32-wasi-16
 wasmtime run --dir  ${PYTHON_WASI_ROOT} \
              --mapdir /::${PYTHON_WASI_ROOT} \
-             --dir /workspaces/dev-wasm-python/ \
-             --mapdir /workspace::/workspaces/dev-wasm-python \
-             -- ${PYTHON_WASI_ROOT}/python.wasm "/workspace/${@#}"
+             --dir ${HOST_DIR} \
+             --mapdir ${GUEST_DIR}::${HOST_DIR} \
+             -- ${PYTHON_WASI_ROOT}/python.wasm $FILE
